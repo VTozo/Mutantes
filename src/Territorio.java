@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 class Territorio extends JPanel {
     private int contador = 0;
-    private ArrayList<Ser> seres = new ArrayList<>();
+    private ArrayList<Ser> seres = new ArrayList<Ser>();
     private Racional racional;
     int largura = 400;
     int altura = 400;
@@ -110,7 +110,7 @@ class Territorio extends JPanel {
     }
 
     private void detectar_fissoes() {
-        ArrayList<Ser> seres_to_add = new ArrayList<>();
+        ArrayList<Ser> seres_to_add = new ArrayList<Ser>();
 
         for (Ser ser: seres
              ) {
