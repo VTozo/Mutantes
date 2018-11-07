@@ -17,21 +17,21 @@ class Territorio extends JPanel {
     private int nivel_de_fome = 0;
     private int pontuacao = 0;
 
+
     Territorio(String nome) {
-        racional = new Racional(this);
-        KeyListener listener = new LeitorSetas(racional);
-        addKeyListener(listener);
-        setFocusable(true);
         JFrame frame = new JFrame(nome);
         frame.add(this);
         frame.setSize(largura, altura);
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        racional = new Racional(this);
+        KeyListener listener = new LeitorSetas(racional);
+        addKeyListener(listener);
+        setFocusable(true);
     }
 
-    public void paint(Graphics g) {
+        public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -53,8 +53,9 @@ class Territorio extends JPanel {
     }
 
     void jogar() {
+
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (Exception e) {
             e.printStackTrace();
         }

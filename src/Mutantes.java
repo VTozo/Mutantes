@@ -3,7 +3,7 @@ class Mutantes {
         TelaInicial telaInicial = new TelaInicial();
 
 //         Ricardo alterando a tela inicial
-        //        Territorio territorio = new Territorio("Mutantes");
+//        Territorio territorio = new Territorio("Mutantes");
 //        territorio.jogar();
     }
 }
