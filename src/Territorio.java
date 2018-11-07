@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+
 class Territorio extends JPanel {
     private int contador = 0;
     private ArrayList<Ser> seres = new ArrayList<Ser>();
@@ -17,21 +18,32 @@ class Territorio extends JPanel {
     private int nivel_de_fome = 0;
     private int pontuacao = 0;
 
+    private ControleDeTela controleDeTela;
 
-    Territorio(String nome) {
-        JFrame frame = new JFrame(nome);
-        frame.add(this);
-        frame.setSize(largura, altura);
-        frame.setVisible(true);
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    Territorio(ControleDeTela controleDeTela) {
+
+        this.controleDeTela = controleDeTela;
+
+//        JFrame frame = new JFrame(nome);
+//        frame.add(this);
+//        frame.setSize(largura, altura);
+//        frame.setResizable(false);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        this.setSize(largura,altura);
+        this.setVisible(true);
         racional = new Racional(this);
         KeyListener listener = new LeitorSetas(racional);
         addKeyListener(listener);
         setFocusable(true);
+
+//        frame.setVisible(true);
+
+
     }
 
         public void paint(Graphics g) {
+
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -53,60 +65,64 @@ class Territorio extends JPanel {
     }
 
     void jogar() {
+        System.out.println("inicio do jogo");
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+//ESTA COM PROBLEMA DE ATUALIZACAO DOS OBJETOS DA TELA
+//        ISSO DEVE SER FEITO NA MAIN THREAD, MAS NAO SEI COMO! (AINDA)
+
         while (jogando) {
 
-            if (ociosidade <= 0 || seres.size()< 3){
-                if(geracao < geracao_maxima){
+            if (ociosidade <= 0 || seres.size() < 3) {
+                if (geracao < geracao_maxima) {
                     gerar_seres(5);
                     geracao++;
                     ociosidade = 100;
-                }
-                else if(ociosidade <= 0 || seres.size()== 1){
-                    if(seres.get(0).get_em_fissao() == 0){
+                } else if (ociosidade <= 0 || seres.size() == 1) {
+                    if (seres.get(0).get_em_fissao() == 0) {
                         jogando = false;
                     }
-                }
-                else if(seres.size()== 0){
+                } else if (seres.size() == 0) {
                     jogando = false;
                 }
 
             }
-            if(contador % 10 == 0){
+            if (contador % 10 == 0) {
                 ociosidade--;
                 nivel_de_fome++;
-                if(nivel_de_fome > 100) pontuacao --;
-                if(pontuacao <= -20) jogando = false;
+                if (nivel_de_fome > 100) pontuacao--;
+                if (pontuacao <= -20) jogando = false;
             }
 
             racional.mover();
             detectar_colisoes();
             detectar_fissoes();
 
-            for (Ser ser:seres
+            for (Ser ser : seres
             ) {
                 ser.mover();
                 int diametro_maximo = 40;
-                if(ser.getDiametro()> diametro_maximo && ser.get_em_fissao() ==0){
+                if (ser.getDiametro() > diametro_maximo && ser.get_em_fissao() == 0) {
                     ser.iniciar_fissao();
                 }
             }
 
             repaint();
             try {
-                Thread.sleep(1000/60);
+                Thread.sleep(1000 / 60);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             contador++;
+
         }
-        if(perdeu) game_over(0);
-        else if(pontuacao <= -20) game_over(1);
+        if (perdeu) game_over(0);
+        else if (pontuacao <= -20) game_over(1);
         else game_over(2);
     }
 
@@ -227,7 +243,9 @@ class Territorio extends JPanel {
             String mensagem = "Você ganhou!\nPontuação: "+pontuacao;
             JOptionPane.showMessageDialog(this, mensagem, "Parabéns!", JOptionPane.PLAIN_MESSAGE);
         }
-        System.exit(0);
+
+        controleDeTela.gameOver();
+//        System.exit(0);
     }
 
     private void gerar_seres(int n){

@@ -1,7 +1,4 @@
-import sun.tools.jstat.Alignment;
-
 import javax.swing.*;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -9,11 +6,7 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
-import java.nio.Buffer;
-import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
@@ -22,16 +15,10 @@ public class TelaInicial extends JPanel implements ActionListener {
 
     int largura = 400;
     int altura = 400;
-    private JFrame frame;
+    ControleDeTela controleDeTela;
 
-    TelaInicial() {
-
-        frame = new JFrame();
-        frame.getContentPane().add(this);
-        frame.setSize(largura, altura);
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setBackground(Color.black);
+    TelaInicial(ControleDeTela controleDeTela) {
+        this.controleDeTela = controleDeTela;
 
         GridLayout layout = new GridLayout(0,1);
         this.setLayout(layout);
@@ -89,20 +76,16 @@ public class TelaInicial extends JPanel implements ActionListener {
         labelCreditos.setForeground(Color.WHITE);
         this.add(labelCreditos);
 
-        frame.setVisible(true);
-
     }
 
 
 
     private void action_btnJogar(){
-        frame.setVisible(false);
-        Territorio territorio = new Territorio("Territorio");
-        territorio.jogar();
+        controleDeTela.btnJogarPressionado();
     }
 
     private void action_btnHallDaFama(){
-        System.out.println("Abre a tela do Hall da Fama");
+        controleDeTela.btnHallDaFamaPressionado();
     }
 
     public void actionPerformed(ActionEvent e) {
