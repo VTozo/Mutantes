@@ -16,6 +16,8 @@ public class HallDaFama extends JPanel {
     int altura = 400;
     ControleDeTela controleDeTela;
 
+    JLabel labelScores;
+
     HallDaFama(ControleDeTela controleDeTela) {
         this.controleDeTela = controleDeTela;
 
@@ -24,19 +26,26 @@ public class HallDaFama extends JPanel {
 
         this.setBackground(Color.black);
 
+
+
         try {
             BufferedImage image = ImageIO.read(new File("src/imagens/mutantes_logo.png"));
             JLabel picLabel = new JLabel(new ImageIcon(image));
-
             this.add(picLabel);
 
-            BufferedImage imgBtnJogar = ImageIO.read(new File("src/imagens/botao_voltar.png"));
+            labelScores = new JLabel();
+            labelScores.setForeground(Color.WHITE);
+            labelScores.setHorizontalAlignment(SwingConstants.CENTER);
+            labelScores.setText("COLOCAR O TEXTO DE SCORES AQUI");
+            this.add(labelScores);
+
+            BufferedImage imgBtnVoltar = ImageIO.read(new File("src/imagens/botao_voltar.png"));
 
             Border emptyBorder = BorderFactory.createEmptyBorder();
 
             JButton btnVoltar = new JButton();
             btnVoltar.setBorder(emptyBorder);
-            btnVoltar.setIcon(new ImageIcon(imgBtnJogar));
+            btnVoltar.setIcon(new ImageIcon(imgBtnVoltar));
 
             btnVoltar.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -45,6 +54,7 @@ public class HallDaFama extends JPanel {
             });
 
             this.add(btnVoltar);
+
 
 
 

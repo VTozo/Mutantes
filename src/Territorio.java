@@ -64,6 +64,9 @@ class Territorio extends JPanel {
 
     }
 
+//  ESTA COM PROBLEMA DE ATUALIZACAO DOS OBJETOS DA TELA
+//  ISSO DEVE SER FEITO NA MAIN THREAD, MAS NAO SEI COMO! (AINDA)
+    
     void jogar() {
         System.out.println("inicio do jogo");
 
@@ -73,8 +76,6 @@ class Territorio extends JPanel {
             e.printStackTrace();
         }
 
-//ESTA COM PROBLEMA DE ATUALIZACAO DOS OBJETOS DA TELA
-//        ISSO DEVE SER FEITO NA MAIN THREAD, MAS NAO SEI COMO! (AINDA)
 
         while (jogando) {
 
