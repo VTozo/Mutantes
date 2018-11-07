@@ -61,6 +61,19 @@ public class TelaInicial extends JPanel implements ActionListener {
 
             this.add(btnHallOfFame);
 
+            BufferedImage imgBtnConfiguracoes = ImageIO.read(new File("src/imagens/botao_configuracoes.png"));
+
+            JButton btnConfiguracoes = new JButton();
+            btnConfiguracoes.setBorder(emptyBorder);
+            btnConfiguracoes.setIcon(new ImageIcon(imgBtnConfiguracoes));
+            btnConfiguracoes.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    action_btnConfiguracoes();
+                }
+            });
+
+            this.add(btnConfiguracoes);
+
         } catch (IOException ex) {
             // handle exception...
         }
@@ -83,6 +96,11 @@ public class TelaInicial extends JPanel implements ActionListener {
     private void action_btnJogar(){
         controleDeTela.btnJogarPressionado();
     }
+
+    private void action_btnConfiguracoes(){
+        controleDeTela.btnConfiguracoesPressionado();
+    }
+
 
     private void action_btnHallDaFama(){
         controleDeTela.btnHallDaFamaPressionado();

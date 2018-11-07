@@ -7,7 +7,8 @@ import java.util.ArrayList;
 class Territorio extends JPanel {
     private int contador = 0;
     private ArrayList<Ser> seres = new ArrayList<Ser>();
-    private Racional racional;
+    public Racional racional;
+
     int largura = 400;
     int altura = 400;
     private boolean jogando = true;
@@ -32,13 +33,14 @@ class Territorio extends JPanel {
 
         this.setSize(largura,altura);
         this.setVisible(true);
-        racional = new Racional(this);
-        KeyListener listener = new LeitorSetas(racional);
-        addKeyListener(listener);
-        setFocusable(true);
-
-//        frame.setVisible(true);
-
+        try{
+            racional = new Racional(this);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+//        KeyListener listener = new LeitorSetas(racional);
+//        addKeyListener(listener);
+//        setFocusable(true);
 
     }
 
@@ -60,6 +62,8 @@ class Territorio extends JPanel {
         g2d.drawString("Geração: " + String.valueOf(geracao) + "/" + String.valueOf(geracao_maxima), 10, 20);
         g2d.drawString("Ociosidade: " + String.valueOf(ociosidade), 10, 40);
         g2d.drawString("Pontuacao: " + String.valueOf(pontuacao), 10, 60);
+
+
         //g2d.drawString("Fome: " + String.valueOf(nivel_de_fome), 10, 80);
 
     }
@@ -70,11 +74,23 @@ class Territorio extends JPanel {
     void jogar() {
         System.out.println("inicio do jogo");
 
+        Thread loop = new Thread() {
+            public void run() {
+                gameLoop();
+            }
+        };
+
         try {
             Thread.sleep(1000);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        loop.start();
+
+    }
+
+    private void gameLoop(){
 
 
         while (jogando) {
@@ -104,8 +120,7 @@ class Territorio extends JPanel {
             detectar_colisoes();
             detectar_fissoes();
 
-            for (Ser ser : seres
-            ) {
+            for (Ser ser : seres){
                 ser.mover();
                 int diametro_maximo = 40;
                 if (ser.getDiametro() > diametro_maximo && ser.get_em_fissao() == 0) {
@@ -114,7 +129,10 @@ class Territorio extends JPanel {
             }
 
             repaint();
+
+
             try {
+
                 Thread.sleep(1000 / 60);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -122,9 +140,11 @@ class Territorio extends JPanel {
             contador++;
 
         }
+
         if (perdeu) game_over(0);
         else if (pontuacao <= -20) game_over(1);
         else game_over(2);
+
     }
 
     private void detectar_fissoes() {
@@ -257,8 +277,7 @@ class Territorio extends JPanel {
                     Math.sqrt(
                             Math.pow(ser.getPosicao()[0]-racional.getPosicao()[0],2) +
                             Math.pow(ser.getPosicao()[1]-racional.getPosicao()[1],2)
-                    )
-                            > 200
+                    ) > 200
             ){
                 seres.add(ser);
                 seres_gerados++;

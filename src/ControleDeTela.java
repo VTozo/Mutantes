@@ -1,31 +1,18 @@
 import javax.swing.*;
-import javax.swing.*;
-import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
-import java.nio.Buffer;
-import java.util.ArrayList;
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
 
 
 public class ControleDeTela extends JPanel implements TelaInicialInterface, TerritorioInterface, HallDaFamaInterface{
     int largura = 400;
     int altura = 400;
-    JFrame frame;
+
+    public JFrame frame;
 
     TelaInicial telaInicial;
     HallDaFama hallDaFama;
     Territorio territorio;
-
+    TelaConfiguracoes telaConfiguracoes;
 
     ControleDeTela() {
 
@@ -50,30 +37,18 @@ public class ControleDeTela extends JPanel implements TelaInicialInterface, Terr
     public void btnJogarPressionado(){
         System.out.println("btnJogarPressionado");
         telaInicial.setVisible(false);
-//        System.out.println("antes: " + this.getLayout());
+
         this.remove(telaInicial);
-//        this.revalidate();
-//        this.repaint();
-//
+
         territorio = new Territorio(this);
         this.add(territorio);
-        System.out.println("depois: " + this.getLayout());
-        territorio.jogar();
-//
-//
-//
-//        telaInicial.setVisible(false);
-//        territorio.setVisible(true);
-//
-//        this.revalidate();
-//        this.repaint();
-//
-//        territorio.jogar();
-//        this.revalidate();
-//        this.repaint();
-//
-//        System.out.println(territorio);
 
+//        O Controle de tela é quem vai receber os Eventos de Tecla
+        KeyListener listener = new LeitorSetas(territorio.racional);
+        addKeyListener(listener);
+        setFocusable(true);
+
+        territorio.jogar();
     }
 
     public void btnHallDaFamaPressionado(){
@@ -93,9 +68,26 @@ public class ControleDeTela extends JPanel implements TelaInicialInterface, Terr
         hallDaFama.setVisible(true);
     }
 
+    public void btnConfiguracoesPressionado(){
+        System.out.println("btnConfiguracoesPressionado");
+
+        this.remove(telaInicial);
+        this.revalidate();
+        this.repaint();
+
+        if (telaConfiguracoes == null){
+            telaConfiguracoes = new TelaConfiguracoes(this);
+        }
+
+        this.add(telaConfiguracoes);
+        telaInicial.setVisible(false);
+
+        telaConfiguracoes.setVisible(true);
+
+    }
+
 //    Interface do Territorio
     public void gameOver(){
-        System.out.println("Game Over");
 
         this.remove(territorio);
         territorio = null;
@@ -107,14 +99,26 @@ public class ControleDeTela extends JPanel implements TelaInicialInterface, Terr
         telaInicial.setVisible(true);
     }
 
+
+
 //  Interface Hall Da Fama
     public void btnVoltarPressionado(){
+
         System.out.println("btnVoltarPressionado");
-        this.remove(hallDaFama);
+        if (hallDaFama != null && hallDaFama.isVisible()){
+            this.remove(hallDaFama);
+            hallDaFama.setVisible(false);
+            hallDaFama = null;
+        }else if (telaConfiguracoes != null && telaConfiguracoes.isVisible()){
+            this.remove(telaConfiguracoes);
+            telaConfiguracoes.setVisible(false);
+            telaConfiguracoes = null;
+        }
         this.add(telaInicial);
         this.revalidate();
         this.repaint();
 
         telaInicial.setVisible(true);
     }
+
 }

@@ -1,6 +1,10 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 class Racional extends JComponent {
 
@@ -15,18 +19,34 @@ class Racional extends JComponent {
     private boolean pressed_up = false;
     private boolean pressed_down = false;
 
-    Racional(Territorio territorio){
+    Image image;
+    private int angle;
+
+
+    Racional(Territorio territorio) throws IOException {
         this.cor = Color.MAGENTA;
         this.territorio = territorio;
         this.x = territorio.largura/2 -tamanho;
         this.y = territorio.altura/2 -tamanho;
+
+        try {
+            BufferedImage bufferedImage = ImageIO.read(new File("src/imagens/personagem_menina.png"));
+            image = bufferedImage.getScaledInstance(tamanho, tamanho,  java.awt.Image.SCALE_SMOOTH ) ;
+        }catch (Exception e){
+            System.out.println(e.fillInStackTrace());
+        }
+
     }
 
     public void paint(Graphics g){
         Graphics2D g2d = (Graphics2D)g;
 
         g2d.setColor(cor);
-        g2d.fillRect(x, y, tamanho, tamanho);
+//        g2d.fillRect(x, y, tamanho, tamanho);
+
+        
+        g2d.drawImage(image,x,y,null);
+
     }
 
     void keyPressed(KeyEvent e){
