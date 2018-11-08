@@ -29,7 +29,6 @@ public class ControleDeTela extends JPanel implements TelaInicialInterface, Terr
         telaInicial = new TelaInicial(this);
         this.add(telaInicial);
 
-
         frame.setVisible(true);
     }
 

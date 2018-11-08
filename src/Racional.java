@@ -5,6 +5,9 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.awt.geom.AffineTransform;
+
+import java.lang.Math;
 
 class Racional extends JComponent {
 
@@ -20,7 +23,7 @@ class Racional extends JComponent {
     private boolean pressed_down = false;
 
     Image image;
-    private int angle;
+    private double angle;
 
 
     Racional(Territorio territorio) throws IOException {
@@ -44,8 +47,21 @@ class Racional extends JComponent {
         g2d.setColor(cor);
 //        g2d.fillRect(x, y, tamanho, tamanho);
 
-        
-        g2d.drawImage(image,x,y,null);
+        //Make a backup so that we can reset our graphics object after using it.
+        AffineTransform backup = g2d.getTransform();
+        //rx is the x coordinate for rotation, ry is the y coordinate for rotation, and angle
+        //is the angle to rotate the image. If you want to rotate around the center of an image,
+        //use the image's center x and y coordinates for rx and ry.
+        double radAngle = Math.toRadians(angle);
+        AffineTransform a = AffineTransform.getRotateInstance(radAngle, x + tamanho/2, y+tamanho/2);
+        //Set our Graphics2D object to the transform
+        g2d.setTransform(a);
+        //Draw our image like normal
+        g2d.drawImage(image, x, y, null);
+        //Reset our graphics object so we can draw with it again.
+        g2d.setTransform(backup);
+
+//        g2d.drawImage(image,x,y,null);
 
     }
 
@@ -88,6 +104,25 @@ class Racional extends JComponent {
         if(pressed_right && x<territorio.largura-tamanho-16) x += velocidade;
         if(pressed_up && y>0) y -= velocidade;
         if(pressed_down && y<territorio.altura-tamanho-37) y += velocidade;
+
+//        calculo do angulo, considerando:
+
+
+        if (pressed_right){
+            if (pressed_down) angle = 135;
+            else if(pressed_up) angle = 45;
+            else angle = 90;
+        }else if(pressed_left){
+            if (pressed_down) angle = -135;
+            else if(pressed_up) angle = -45;
+            else angle = -90;
+        }else {
+            if (pressed_down) angle = 180;
+            else if (pressed_up) angle = 0;
+        }
+
+
+
     }
 
     Rectangle getRetangulo() {
