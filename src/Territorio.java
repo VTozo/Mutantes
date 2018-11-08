@@ -44,29 +44,30 @@ class Territorio extends JPanel {
 
     }
 
-        public void paint(Graphics g) {
+    public void paint(Graphics g) {
 
-        super.paint(g);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    super.paint(g);
+    Graphics2D g2d = (Graphics2D) g;
+    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        for (Ser ser:seres
-        ) {
-            if (ser != null) ser.paint(g);
-        }
+    for (Ser ser:seres
+    ) {
+        if (ser != null) ser.paint(g);
+    }
 
-        if (racional != null) racional.paint(g);
+    if (racional != null) racional.paint(g);
 
-        g2d.setColor(Color.DARK_GRAY);
-        g2d.setFont(new Font("Consolas", Font.BOLD, 16));
-        g2d.drawString("Geração: " + String.valueOf(geracao) + "/" + String.valueOf(geracao_maxima), 10, 20);
-        g2d.drawString("Ociosidade: " + String.valueOf(ociosidade), 10, 40);
-        g2d.drawString("Pontuacao: " + String.valueOf(pontuacao), 10, 60);
+    g2d.setColor(Color.DARK_GRAY);
+    g2d.setFont(new Font("Consolas", Font.BOLD, 16));
+    g2d.drawString("Geração: " + String.valueOf(geracao) + "/" + String.valueOf(geracao_maxima), 10, 20);
+    g2d.drawString("Ociosidade: " + String.valueOf(ociosidade), 10, 40);
+    g2d.drawString("Pontuacao: " + String.valueOf(pontuacao), 10, 60);
 
 
-        //g2d.drawString("Fome: " + String.valueOf(nivel_de_fome), 10, 80);
+    //g2d.drawString("Fome: " + String.valueOf(nivel_de_fome), 10, 80);
 
     }
+
 
 //  ESTA COM PROBLEMA DE ATUALIZACAO DOS OBJETOS DA TELA
 //  ISSO DEVE SER FEITO NA MAIN THREAD, MAS NAO SEI COMO! (AINDA)
@@ -284,5 +285,6 @@ class Territorio extends JPanel {
             }
         }
     }
+
 
 }

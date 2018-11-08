@@ -28,7 +28,7 @@ class Racional extends JComponent {
 
     Racional(Territorio territorio) throws IOException {
 
-        Configuracoes configuracoes = new Configuracoes();
+        Configuracao configuracoes = new Configuracao();
         String imgPathName = "src/imagens/personagem_" + configuracoes.personagem + ".png";
 
         this.cor = Color.MAGENTA;

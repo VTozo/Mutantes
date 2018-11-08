@@ -40,12 +40,21 @@ public class ControleDeTela extends JPanel implements TelaInicialInterface, Terr
         this.remove(telaInicial);
 
         territorio = new Territorio(this);
-        this.add(territorio);
 
-//        O Controle de tela é quem vai receber os Eventos de Tecla
-        KeyListener listener = new LeitorSetas(territorio.racional);
+        KeyListener listener = LeitorSetas.getInstance();
+        System.out.println("listener: " + listener);
+        ((LeitorSetas) listener).setRacional(territorio.racional);
+
         addKeyListener(listener);
         setFocusable(true);
+
+
+        this.add(territorio);
+        territorio.setVisible(true);
+        System.out.println("racional: " + territorio.racional);
+//        O Controle de tela é quem vai receber os Eventos de Tecla
+
+
 
         territorio.jogar();
     }
@@ -89,6 +98,8 @@ public class ControleDeTela extends JPanel implements TelaInicialInterface, Terr
     public void gameOver(){
 
         this.remove(territorio);
+        territorio.setVisible(false);
+        territorio.racional = null;
         territorio = null;
 
         this.add(telaInicial);

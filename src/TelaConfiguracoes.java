@@ -20,15 +20,15 @@ public class TelaConfiguracoes extends JPanel {
     JButton btnMenina;
     JButton btnMenino;
 
-    Configuracoes configuracoes;
+    Configuracao configuracao;
 
 
     TelaConfiguracoes(ControleDeTela controleDeTela) {
 
         this.controleDeTela = controleDeTela;
 
-        BoxLayout layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
-        configuracoes = new Configuracoes();
+        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
+        configuracao = new Configuracao();
 
 //        this.setLayout(layout);
 
@@ -106,7 +106,7 @@ public class TelaConfiguracoes extends JPanel {
         }
 
 
-        selecionarPersonagem(configuracoes.personagem);
+        selecionarPersonagem(configuracao.personagem);
 
     }
 
