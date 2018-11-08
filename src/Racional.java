@@ -33,12 +33,11 @@ class Racional extends JComponent {
 
         this.cor = Color.MAGENTA;
         this.territorio = territorio;
-        this.x = territorio.largura/2 -tamanho;
-        this.y = territorio.altura/2 -tamanho;
+        this.x = territorio.largura/2 - tamanho;
+        this.y = territorio.altura/2 - tamanho;
 
 
         try {
-
             BufferedImage bufferedImage = ImageIO.read(new File(imgPathName));
             image = bufferedImage.getScaledInstance(tamanho, tamanho,  java.awt.Image.SCALE_SMOOTH ) ;
         }catch (Exception e){
