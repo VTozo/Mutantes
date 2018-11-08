@@ -1,6 +1,6 @@
 class Mutantes {
-    public static void main(String args[]){
-//        ControleDeTela controleDeTela = new ControleDeTela();
-        TelaInicialInterface telaInicialInterface = new ControleDeTela();
+    public static void main(String args[]) {
+        Territorio territorio = new Territorio("Mutantes");
+        territorio.jogar();
     }
 }
