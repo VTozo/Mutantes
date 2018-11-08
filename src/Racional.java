@@ -27,13 +27,19 @@ class Racional extends JComponent {
 
 
     Racional(Territorio territorio) throws IOException {
+
+        Configuracoes configuracoes = new Configuracoes();
+        String imgPathName = "src/imagens/personagem_" + configuracoes.personagem + ".png";
+
         this.cor = Color.MAGENTA;
         this.territorio = territorio;
         this.x = territorio.largura/2 -tamanho;
         this.y = territorio.altura/2 -tamanho;
 
+
         try {
-            BufferedImage bufferedImage = ImageIO.read(new File("src/imagens/personagem_menina.png"));
+
+            BufferedImage bufferedImage = ImageIO.read(new File(imgPathName));
             image = bufferedImage.getScaledInstance(tamanho, tamanho,  java.awt.Image.SCALE_SMOOTH ) ;
         }catch (Exception e){
             System.out.println(e.fillInStackTrace());

@@ -17,11 +17,18 @@ public class TelaConfiguracoes extends JPanel {
     int altura = 400;
     ControleDeTela controleDeTela;
 
+    JButton btnMenina;
+    JButton btnMenino;
+
+    Configuracoes configuracoes;
+
+
     TelaConfiguracoes(ControleDeTela controleDeTela) {
 
         this.controleDeTela = controleDeTela;
 
         BoxLayout layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
+        configuracoes = new Configuracoes();
 
 //        this.setLayout(layout);
 
@@ -39,30 +46,41 @@ public class TelaConfiguracoes extends JPanel {
 
             this.add(picLabel);
 
-
-            Border emptyBorder = BorderFactory.createEmptyBorder();
-            Border selectBorder = BorderFactory.createLineBorder(Color.RED);
-
 //            botao menina
             int NEW_WIDTH = 60;
             int NEW_HEIGHT = 60;
 
+            Border emptyBorder = BorderFactory.createEmptyBorder();
+            Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+
             BufferedImage bufferImgMenina = ImageIO.read(new File("src/imagens/personagem_menina.png"));
             Image imgMenina = bufferImgMenina.getScaledInstance( NEW_WIDTH, NEW_HEIGHT,  java.awt.Image.SCALE_SMOOTH ) ;
 
-            JButton btnMenina = new JButton();
-            btnMenina.setBorder(selectBorder);
+            btnMenina = new JButton();
             btnMenina.setIcon(new ImageIcon(imgMenina));
             btnMenina.setSize(30,30);
+            btnMenina.setBorder(blackBorder);
+
+            btnMenina.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    selecionarPersonagem("menina");
+                }
+            });
             this.add(btnMenina);
 
 //            botao menino
             BufferedImage bufferImgMenino = ImageIO.read(new File("src/imagens/personagem_menino.png"));
             Image imgMenino = bufferImgMenino.getScaledInstance( NEW_WIDTH, NEW_HEIGHT,  java.awt.Image.SCALE_SMOOTH ) ;
-            JButton btnMenino = new JButton();
-            btnMenino.setBorder(emptyBorder);
+            btnMenino = new JButton();
             btnMenino.setIcon(new ImageIcon(imgMenino));
             btnMenino.setSize(30,30);
+            btnMenino.setBorder(blackBorder);
+
+            btnMenino.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    selecionarPersonagem("menino");
+                }
+            });
             this.add(btnMenino);
 
 
@@ -88,11 +106,25 @@ public class TelaConfiguracoes extends JPanel {
         }
 
 
+        selecionarPersonagem(configuracoes.personagem);
 
     }
 
     private void action_btnVoltar(){
         controleDeTela.btnVoltarPressionado();
+    }
+
+    private void selecionarPersonagem(String personagem){
+        Border selectedBorder = BorderFactory.createLineBorder(Color.RED);
+        Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+
+        if (personagem == "menina"){
+            btnMenina.setBorder(selectedBorder);
+            btnMenino.setBorder(blackBorder);
+        }else{
+            btnMenino.setBorder(selectedBorder);
+            btnMenina.setBorder(blackBorder);
+        }
     }
 
 }
