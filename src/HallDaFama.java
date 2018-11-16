@@ -4,8 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 import java.awt.*;
 import javax.swing.BorderFactory;
@@ -65,5 +64,23 @@ public class HallDaFama extends JPanel {
 
     private void action_btnVoltar(){
         controleDeTela.btnVoltarPressionado();
+    }
+
+    public void salvar() throws IOException{
+        FileOutputStream arquivo = new FileOutputStream("hall.hl");
+        ObjectOutputStream gravador = new ObjectOutputStream(arquivo);
+        gravador.writeObject(this);
+        gravador.close();
+        arquivo.close();
+    }
+
+    public static HallDaFama abrir() throws IOException, ClassNotFoundException{
+        HallDaFama hallDaFama = null;
+        FileInputStream arquivo = new FileInputStream("hall.hl");
+        ObjectInputStream restaurador = new ObjectInputStream(arquivo);
+        hallDaFama = (HallDaFama) restaurador.readObject();
+        restaurador.close();
+        arquivo.close();
+        return hallDaFama;
     }
 }
