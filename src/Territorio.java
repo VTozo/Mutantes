@@ -50,10 +50,12 @@ class Territorio extends JPanel {
     Graphics2D g2d = (Graphics2D) g;
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-    for (Ser ser:seres
-    ) {
+    //Solucionando problema de ConcurrentModificationException - Isabela Assis
+    for (int i = 0; i < seres.size(); i++) {
+        Ser ser = seres.get(i);
         if (ser != null) ser.paint(g);
     }
+
 
     if (racional != null) racional.paint(g);
 
