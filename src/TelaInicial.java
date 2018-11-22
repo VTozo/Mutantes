@@ -20,6 +20,11 @@ public class TelaInicial extends JPanel implements ActionListener {
     TelaInicial(ControleDeTela controleDeTela) {
         this.controleDeTela = controleDeTela;
 
+
+        this.setSize(largura,altura);
+        this.controleDeTela.frame.setSize(largura, altura);
+
+
         GridLayout layout = new GridLayout(0,1);
         this.setLayout(layout);
 

@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -8,8 +9,8 @@ class Territorio extends JPanel {
     private ArrayList<Ser> seres = new ArrayList<Ser>();
     public Racional racional;
 
-    int largura = 400;
-    int altura = 400;
+    int largura;
+    int altura;
     private boolean jogando = true;
     private boolean perdeu = false;
     private int geracao = 0;
@@ -17,6 +18,8 @@ class Territorio extends JPanel {
     private int ociosidade = 100;
     private int nivel_de_fome = 0;
     private int pontuacao = 0;
+    private int minimoSeres = 0;
+    Configuracao configuracao = new Configuracao();
 
     private ControleDeTela controleDeTela;
 
@@ -24,13 +27,29 @@ class Territorio extends JPanel {
 
         this.controleDeTela = controleDeTela;
 
-//        JFrame frame = new JFrame(nome);
+        //        JFrame frame = new JFrame(nome);
 //        frame.add(this);
 //        frame.setSize(largura, altura);
 //        frame.setResizable(false);
 //        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        try {
+            configuracao = Configuracao.abrir();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        altura = configuracao.altura;
+        largura = configuracao.largura;
+
+        minimoSeres = configuracao.minimoSeres;
+
 
         this.setSize(largura,altura);
+        this.controleDeTela.frame.setSize(largura, altura);
+        System.out.println("parent: " + this.getParent());
+
         this.setVisible(true);
         try{
             racional = new Racional(this);
@@ -97,9 +116,9 @@ class Territorio extends JPanel {
 
         while (jogando) {
 
-            if (ociosidade <= 0 || seres.size() < 3) {
+            if (ociosidade <= 0 || seres.size() < minimoSeres) {
                 if (geracao < geracao_maxima) {
-                    gerar_seres(5);
+                    gerar_seres(configuracao.minimoSeres * 2);
                     geracao++;
                     Sounds.playSound("TrocaGeracao.wav");
                     ociosidade = 100;

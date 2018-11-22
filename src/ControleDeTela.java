@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 
 public class ControleDeTela extends JPanel implements TelaInicialInterface, TerritorioInterface, TelaHallDaFamaInterface{
@@ -19,9 +20,18 @@ public class ControleDeTela extends JPanel implements TelaInicialInterface, Terr
         GridLayout layout = new GridLayout(1,0);
         this.setLayout(layout);
 
+        Configuracao configuracao = new Configuracao();
+        try {
+            configuracao = configuracao.abrir();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         frame = new JFrame("FrameDoJogo");
         frame.getContentPane().add(this);
-        frame.setSize(largura, altura);
+        frame.setSize(400, 400);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBackground(Color.black);
@@ -96,7 +106,7 @@ public class ControleDeTela extends JPanel implements TelaInicialInterface, Terr
 
 //    Interface do Territorio
     public void gameOver(){
-
+        frame.setSize(largura,altura);
         this.remove(territorio);
         territorio.setVisible(false);
         territorio.racional = null;
