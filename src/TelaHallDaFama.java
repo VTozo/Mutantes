@@ -10,14 +10,14 @@ import java.awt.*;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
-public class HallDaFama extends JPanel {
+public class TelaHallDaFama extends JPanel {
     int largura = 400;
     int altura = 400;
     ControleDeTela controleDeTela;
 
     JLabel labelScores;
 
-    HallDaFama(ControleDeTela controleDeTela) {
+    TelaHallDaFama(ControleDeTela controleDeTela) {
         this.controleDeTela = controleDeTela;
 
         GridLayout layout = new GridLayout(0,1);
@@ -74,11 +74,11 @@ public class HallDaFama extends JPanel {
         arquivo.close();
     }
 
-    public static HallDaFama abrir() throws IOException, ClassNotFoundException{
-        HallDaFama hallDaFama = null;
+    public static TelaHallDaFama abrir() throws IOException, ClassNotFoundException{
+        TelaHallDaFama hallDaFama = null;
         FileInputStream arquivo = new FileInputStream("hall.hl");
         ObjectInputStream restaurador = new ObjectInputStream(arquivo);
-        hallDaFama = (HallDaFama) restaurador.readObject();
+        hallDaFama = (TelaHallDaFama) restaurador.readObject();
         restaurador.close();
         arquivo.close();
         return hallDaFama;

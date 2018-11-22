@@ -3,14 +3,14 @@ import java.awt.*;
 import java.awt.event.KeyListener;
 
 
-public class ControleDeTela extends JPanel implements TelaInicialInterface, TerritorioInterface, HallDaFamaInterface{
+public class ControleDeTela extends JPanel implements TelaInicialInterface, TerritorioInterface, TelaHallDaFamaInterface{
     int largura = 400;
     int altura = 400;
 
     public JFrame frame;
 
     TelaInicial telaInicial;
-    HallDaFama hallDaFama;
+    TelaHallDaFama telaHallDaFama;
     Territorio territorio;
     TelaConfiguracoes telaConfiguracoes;
 
@@ -61,19 +61,19 @@ public class ControleDeTela extends JPanel implements TelaInicialInterface, Terr
 
     public void btnHallDaFamaPressionado(){
         System.out.println("btnHallDaFamaPressionado");
-        System.out.println(hallDaFama);
+        System.out.println(telaHallDaFama);
         this.remove(telaInicial);
         this.revalidate();
         this.repaint();
 
-        if (hallDaFama == null){
-            hallDaFama = new HallDaFama(this);
+        if (telaHallDaFama == null){
+            telaHallDaFama = new TelaHallDaFama(this);
         }
 
-        this.add(hallDaFama);
+        this.add(telaHallDaFama);
         telaInicial.setVisible(false);
 
-        hallDaFama.setVisible(true);
+        telaHallDaFama.setVisible(true);
     }
 
     public void btnConfiguracoesPressionado(){
@@ -115,10 +115,10 @@ public class ControleDeTela extends JPanel implements TelaInicialInterface, Terr
     public void btnVoltarPressionado(){
 
         System.out.println("btnVoltarPressionado");
-        if (hallDaFama != null && hallDaFama.isVisible()){
-            this.remove(hallDaFama);
-            hallDaFama.setVisible(false);
-            hallDaFama = null;
+        if (telaHallDaFama != null && telaHallDaFama.isVisible()){
+            this.remove(telaHallDaFama);
+            telaHallDaFama.setVisible(false);
+            telaHallDaFama = null;
         }else if (telaConfiguracoes != null && telaConfiguracoes.isVisible()){
             this.remove(telaConfiguracoes);
             telaConfiguracoes.setVisible(false);

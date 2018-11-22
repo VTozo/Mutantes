@@ -2,6 +2,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +23,9 @@ class Racional extends JComponent {
     private boolean pressed_up = false;
     private boolean pressed_down = false;
 
-    Image image;
+    private Image image;
+    private BufferedImage bufferedImage;
+
     private double angle;
 
 
@@ -38,7 +41,6 @@ class Racional extends JComponent {
             e.printStackTrace();
         }
 
-        System.out.println("personagem: " + configuracao.personagem);
 
         String imgPathName = "src/imagens/personagem_" + configuracao.personagem + ".png";
 
@@ -49,7 +51,7 @@ class Racional extends JComponent {
 
 
         try {
-            BufferedImage bufferedImage = ImageIO.read(new File(imgPathName));
+            bufferedImage = ImageIO.read(new File(imgPathName));
             image = bufferedImage.getScaledInstance(tamanho, tamanho,  java.awt.Image.SCALE_SMOOTH ) ;
         }catch (Exception e){
             System.out.println(e.fillInStackTrace());
@@ -60,9 +62,6 @@ class Racional extends JComponent {
     public void paint(Graphics g){
         Graphics2D g2d = (Graphics2D)g;
 
-        g2d.setColor(cor);
-//        g2d.fillRect(x, y, tamanho, tamanho);
-
         //Make a backup so that we can reset our graphics object after using it.
         AffineTransform backup = g2d.getTransform();
         //rx is the x coordinate for rotation, ry is the y coordinate for rotation, and angle
@@ -70,8 +69,12 @@ class Racional extends JComponent {
         //use the image's center x and y coordinates for rx and ry.
         double radAngle = Math.toRadians(angle);
         AffineTransform a = AffineTransform.getRotateInstance(radAngle, x + tamanho/2, y+tamanho/2);
+
         //Set our Graphics2D object to the transform
         g2d.setTransform(a);
+
+
+
         //Draw our image like normal
         g2d.drawImage(image, x, y, null);
         //Reset our graphics object so we can draw with it again.
@@ -123,18 +126,21 @@ class Racional extends JComponent {
 
 //        calculo do angulo, considerando:
 
-
+        //a imagem inicial estava com o personagem apontando para cima,
+        // agora está para a direita, por isso precisa ter esse ajuste
+        int ajuste = -90;
         if (pressed_right){
-            if (pressed_down) angle = 135 - 90;
-            else if(pressed_up) angle = 45 - 90;
-            else angle = 90 - 90;
+            if (pressed_down) angle = 135 + ajuste;
+            else if(pressed_up) angle = 45 + ajuste;
+            else angle = 90 + ajuste;
         }else if(pressed_left){
-            if (pressed_down) angle = -135 - 90;
-            else if(pressed_up) angle = -45 - 90;
-            else angle = -90 - 90;
+            if (pressed_down) angle = -135 + ajuste;
+            else if(pressed_up) angle = -45 + ajuste;
+            else angle = -90 + ajuste;
+
         }else {
-            if (pressed_down) angle = 180 - 90;
-            else if (pressed_up) angle = 0 - 90;
+            if (pressed_down) angle = 180 + ajuste;
+            else if (pressed_up) angle = 0 + ajuste;
         }
 
 

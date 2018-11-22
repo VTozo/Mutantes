@@ -81,8 +81,10 @@ public class TelaInicial extends JPanel implements ActionListener {
         JLabel labelCreditos = new JLabel();
         labelCreditos.setText("<html>Créditos<br>" +
                 "Prof. Dr. Alcides Calsavara<br>"+
-                "Guilherme Miranda<br>"+
-                "Ricardo Varjão<br>"+
+                "Caíque  |  "+
+                "Bella A.  |  "+
+                "Guilherme Miranda"+
+                "Ricardo Varjão  |  "+
                 "Vinícius Tozo</html>"
         );
 
