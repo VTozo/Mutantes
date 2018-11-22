@@ -32,6 +32,7 @@ public class Configuracao implements Serializable{
     public int ociosidade;
 
     public Configuracao(){
+
         personagem = "menino";
         largura = 400;
         altura = 300;
@@ -41,6 +42,7 @@ public class Configuracao implements Serializable{
         minimoSeres = 1;
         maximoAumentoLinear = 3;
         ociosidade = 100;
+
     }
 
     public void alterar(String personagem, int largura, int altura, int maxGeracoes, double tempoPasso,

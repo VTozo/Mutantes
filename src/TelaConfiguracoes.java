@@ -1,3 +1,5 @@
+import sun.jvm.hotspot.utilities.soql.JSList;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +12,8 @@ import java.awt.*;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 import javax.swing.BoxLayout;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 public class TelaConfiguracoes extends JPanel {
@@ -18,17 +22,41 @@ public class TelaConfiguracoes extends JPanel {
     int altura = 400;
     ControleDeTela controleDeTela;
 
-    JButton btnMenina;
-    JButton btnMenino;
+    private JButton btnMenina;
+    private JButton btnMenino;
 
-    Configuracao configuracao;
+    private Configuracao configuracao;
 
+    private JSlider sliderLargura;
+    private JSlider sliderAltura;
+
+    private JLabel labelAltura;
+    private JLabel labelLargura;
+
+
+    private JLabel labelMaxGeracoes;
+    private JLabel labelTempoPasso;
+    private JLabel labelTempoOcisidade;
+    private JLabel labelMinimoSeres;
+    private JLabel labelAumentoLinear;
+
+    private JSlider sliderMaxGeracoes;
+    private JSlider sliderTempoPasso;
+    private JSlider sliderTempoOcisidade;
+    private JSlider sliderMinimoSeres;
+    private JSlider sliderAumentoLinear;
+
+
+
+    private ChangeListener listener;
 
     TelaConfiguracoes(ControleDeTela controleDeTela) {
 
         this.controleDeTela = controleDeTela;
 
-        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
+//        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
+
+
         configuracao = new Configuracao();
 
         try {
@@ -41,19 +69,24 @@ public class TelaConfiguracoes extends JPanel {
 
 //        this.setLayout(layout);
 
-        this.setBackground(Color.black);
+        GridLayout layout = new GridLayout(0,2);
+        this.setLayout(layout);
 
-        JLabel lblEscolha = new JLabel();
-        lblEscolha.setText("Escolha seu personagem");
-        lblEscolha.setForeground(Color.white);
-        this.add(lblEscolha);
+        this.setBackground(Color.darkGray);
+
+
 
 
         try {
             BufferedImage image = ImageIO.read(new File("src/imagens/mutantes_logo.png"));
             JLabel picLabel = new JLabel(new ImageIcon(image));
 
+
             this.add(picLabel);
+
+            JLabel lblEscolha = this.configurarLabel();
+            lblEscolha.setText("Escolha seu personagem");
+            this.add(lblEscolha);
 
 //            botao menina
             int NEW_WIDTH = 60;
@@ -91,11 +124,82 @@ public class TelaConfiguracoes extends JPanel {
                 }
             });
             this.add(btnMenino);
+            // common listener for all sliders
+
+
+            listener = new ChangeListener() {
+                public void stateChanged(ChangeEvent event) {
+                    // update text field when the slider value changes
+                    JSlider source = (JSlider) event.getSource();
+
+                    if (source == sliderAltura){
+                        int valorCorreto = Math.round(source.getValue()/10)*10;
+                        sliderAltura.setValue(valorCorreto);
+
+                    }else if (source == sliderLargura){
+                        int valorCorreto = Math.round(source.getValue()/10)*10;
+                        sliderLargura.setValue(valorCorreto);
+
+                    }else if (source == sliderAumentoLinear){
+
+                    }else if (source == sliderMaxGeracoes){
+
+                    }else if (source == sliderMinimoSeres){
+
+                    }else if (source == sliderTempoOcisidade){
+
+                    }else if (source == sliderTempoPasso){
+
+                    }
+
+                    updateLabels();
+                    updateConfiguracao();
+
+                }
+
+            };
+
+            sliderLargura = this.configurarSlider(300, 500,configuracao.largura);
+            sliderAltura = this.configurarSlider(300, 500,configuracao.altura);
+            sliderAumentoLinear = this.configurarSlider(1, 5,configuracao.maximoAumentoLinear);
+            sliderMaxGeracoes = this.configurarSlider(1, 10,configuracao.maxGeracoes);
+            sliderMinimoSeres = this.configurarSlider(1, 10,configuracao.minimoSeres);
+            sliderTempoOcisidade = this.configurarSlider(1, 100,(int)configuracao.tempoMaximoOciosidade);
+            sliderTempoPasso = this.configurarSlider(1, 100,(int)configuracao.tempoPasso);
+
+            labelAltura = this.configurarLabel();
+            labelLargura = this.configurarLabel();
+            labelAumentoLinear = this.configurarLabel();
+            labelMaxGeracoes = this.configurarLabel();
+            labelMinimoSeres = this.configurarLabel();
+            labelTempoOcisidade = this.configurarLabel();
+            labelTempoPasso = this.configurarLabel();
 
 
 
+            this.add(labelAltura);
+            this.add(sliderAltura);
 
-//          botao voltar
+            this.add(labelLargura);
+            this.add(sliderLargura);
+
+            this.add(labelAumentoLinear);
+            this.add(sliderAumentoLinear);
+
+            this.add(labelMaxGeracoes);
+            this.add(sliderMaxGeracoes);
+
+            this.add(labelMinimoSeres);
+            this.add(sliderMinimoSeres);
+
+            this.add(labelTempoOcisidade);
+            this.add(sliderTempoOcisidade);
+
+            this.add(labelTempoPasso);
+            this.add(sliderTempoPasso);
+
+
+            //          botao voltar
             BufferedImage imgBtnVoltar = ImageIO.read(new File("src/imagens/botao_voltar.png"));
             JButton btnVoltar = new JButton();
             btnVoltar.setBorder(emptyBorder);
@@ -117,9 +221,14 @@ public class TelaConfiguracoes extends JPanel {
         String personagem = configuracao.personagem;
         selecionarPersonagem(personagem);
 
+        updateLabels();
+
     }
 
     private void action_btnVoltar(){
+        configuracao.largura = sliderLargura.getValue();
+        configuracao.altura = sliderAltura.getValue();
+
         try {
             configuracao.salvar();
         } catch (IOException e) {
@@ -143,5 +252,52 @@ public class TelaConfiguracoes extends JPanel {
         configuracao.personagem = personagem;
 
     }
+
+
+    private JSlider configurarSlider(int min, int max, int value){
+        System.out.println("min: " + min + "  max: " + max + "  value: " + value);
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, min,max,value);
+
+        slider.setMajorTickSpacing((max - min)/5);
+        slider.setMinorTickSpacing((max - min)/10);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        slider.setBackground(Color.WHITE);
+        slider.setBackground(Color.WHITE);
+        slider.setForeground(Color.red);
+        System.out.println(listener);
+        slider.addChangeListener(listener);
+
+        return slider;
+
+    }
+
+    private JLabel configurarLabel(){
+        JLabel label = new JLabel();
+        label.setForeground(Color.white);
+        return label;
+    }
+
+    private void updateLabels(){
+        labelAltura.setText("altura: " + sliderAltura.getValue());
+        labelLargura.setText("largura: " + sliderLargura.getValue());
+        labelTempoPasso.setText("tempo passo: " + sliderTempoPasso.getValue());
+        labelTempoOcisidade.setText("tempo ociosidade: " + sliderTempoOcisidade.getValue());
+        labelMinimoSeres.setText("mínimo de seresL " + sliderMinimoSeres.getValue());
+        labelMaxGeracoes.setText("max gerações: " + sliderMaxGeracoes.getValue());
+        labelAumentoLinear.setText("aumento linear: " + sliderAumentoLinear.getValue());
+    }
+
+    private void updateConfiguracao(){
+        configuracao.largura = sliderLargura.getValue();
+        configuracao.altura = sliderAltura.getValue();
+        configuracao.tempoPasso = sliderTempoPasso.getValue();
+        configuracao.tempoMaximoOciosidade = sliderTempoOcisidade.getValue();
+        configuracao.minimoSeres = sliderMinimoSeres.getValue();
+        configuracao.maxGeracoes = sliderMaxGeracoes.getValue();
+        configuracao.maximoAumentoLinear = sliderAumentoLinear.getValue();
+
+    }
+
 
 }
