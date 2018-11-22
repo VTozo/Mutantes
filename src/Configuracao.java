@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class Configuracao {
+public class Configuracao implements Serializable{
 
 //    . Largura inicial do território (No exemplo, a largura é 400.)
 //2. Altura inicial do território (No exemplo, a altura é 300.)

@@ -13,6 +13,7 @@ import javax.swing.BoxLayout;
 
 
 public class TelaConfiguracoes extends JPanel {
+
     int largura = 400;
     int altura = 400;
     ControleDeTela controleDeTela;
@@ -29,6 +30,14 @@ public class TelaConfiguracoes extends JPanel {
 
         BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
         configuracao = new Configuracao();
+
+        try {
+            configuracao = configuracao.abrir();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
 //        this.setLayout(layout);
 
@@ -105,12 +114,17 @@ public class TelaConfiguracoes extends JPanel {
             // handle exception...
         }
 
-
-        selecionarPersonagem(configuracao.personagem);
+        String personagem = configuracao.personagem;
+        selecionarPersonagem(personagem);
 
     }
 
     private void action_btnVoltar(){
+        try {
+            configuracao.salvar();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         controleDeTela.btnVoltarPressionado();
     }
 
@@ -118,13 +132,16 @@ public class TelaConfiguracoes extends JPanel {
         Border selectedBorder = BorderFactory.createLineBorder(Color.RED);
         Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
 
-        if (personagem == "menina"){
+        if (personagem.equals("menina")){
             btnMenina.setBorder(selectedBorder);
             btnMenino.setBorder(blackBorder);
         }else{
             btnMenino.setBorder(selectedBorder);
             btnMenina.setBorder(blackBorder);
         }
+
+        configuracao.personagem = personagem;
+
     }
 
 }

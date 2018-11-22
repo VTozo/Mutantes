@@ -28,8 +28,19 @@ class Racional extends JComponent {
 
     Racional(Territorio territorio) throws IOException {
 
-        Configuracao configuracoes = new Configuracao();
-        String imgPathName = "src/imagens/personagem_" + configuracoes.personagem + ".png";
+        Configuracao configuracao = new Configuracao();
+        configuracao = new Configuracao();
+        try {
+            configuracao = configuracao.abrir();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("personagem: " + configuracao.personagem);
+
+        String imgPathName = "src/imagens/personagem_" + configuracao.personagem + ".png";
 
         this.cor = Color.MAGENTA;
         this.territorio = territorio;
@@ -114,16 +125,16 @@ class Racional extends JComponent {
 
 
         if (pressed_right){
-            if (pressed_down) angle = 135;
-            else if(pressed_up) angle = 45;
-            else angle = 90;
+            if (pressed_down) angle = 135 - 90;
+            else if(pressed_up) angle = 45 - 90;
+            else angle = 90 - 90;
         }else if(pressed_left){
-            if (pressed_down) angle = -135;
-            else if(pressed_up) angle = -45;
-            else angle = -90;
+            if (pressed_down) angle = -135 - 90;
+            else if(pressed_up) angle = -45 - 90;
+            else angle = -90 - 90;
         }else {
-            if (pressed_down) angle = 180;
-            else if (pressed_up) angle = 0;
+            if (pressed_down) angle = 180 - 90;
+            else if (pressed_up) angle = 0 - 90;
         }
 
 
