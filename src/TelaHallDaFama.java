@@ -54,8 +54,10 @@ public class TelaHallDaFama extends JPanel {
 
             this.add(btnVoltar);
 
-
-
+            HallDaFama hallDaFama = new HallDaFama();
+            String text = hallDaFama.getTexto();
+            System.out.println(text);
+            labelScores.setText(text);
 
         } catch (IOException ex) {
             // handle exception...
@@ -66,21 +68,4 @@ public class TelaHallDaFama extends JPanel {
         controleDeTela.btnVoltarPressionado();
     }
 
-    public void salvar() throws IOException{
-        FileOutputStream arquivo = new FileOutputStream("hall.hl");
-        ObjectOutputStream gravador = new ObjectOutputStream(arquivo);
-        gravador.writeObject(this);
-        gravador.close();
-        arquivo.close();
-    }
-
-    public static TelaHallDaFama abrir() throws IOException, ClassNotFoundException{
-        TelaHallDaFama hallDaFama = null;
-        FileInputStream arquivo = new FileInputStream("hall.hl");
-        ObjectInputStream restaurador = new ObjectInputStream(arquivo);
-        hallDaFama = (TelaHallDaFama) restaurador.readObject();
-        restaurador.close();
-        arquivo.close();
-        return hallDaFama;
-    }
 }

@@ -1,4 +1,6 @@
-public class EntradaHallDaFama implements Comparable<EntradaHallDaFama> {
+import java.io.Serializable;
+
+public class EntradaHallDaFama implements Comparable<EntradaHallDaFama>, Serializable {
 
     public String nome;
     public int pontuacao;
@@ -7,16 +9,23 @@ public class EntradaHallDaFama implements Comparable<EntradaHallDaFama> {
         nome = "";
         pontuacao = 0;
     }
-
-
-    public int compareTo(EntradaHallDaFama entrada) {
-        return 0;
+    EntradaHallDaFama(String nome, int pontuacao){
+        this.nome = nome;
+        this.pontuacao = pontuacao;
     }
 
-//    public int compare(EntradaHallDaFama c1, EntradaHallDaFama c2){
-//        EntradaHallDaFama a1 = c1.getColor();
-//        EntradaHallDaFama a2 = c2.getColor();
-//        return sortOrder.indexOf(a1) - sortOrder.indexOf(a2);
-//    }
+    public int compareTo(EntradaHallDaFama outraEntrada) {
+
+//        os returns estao ao contrario para mostrar na ordem inversa
+        
+        if (this.pontuacao < outraEntrada.pontuacao){
+            return 1;
+        }else if(this.pontuacao > outraEntrada.pontuacao){
+            return -1;
+        }else{
+            return 0;
+        }
+    }
+
 
 }

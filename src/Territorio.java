@@ -279,12 +279,35 @@ class Territorio extends JPanel {
         if(alt == 0){
             String mensagem = "Você perdeu!\nPontuação: "+pontuacao;
             Sounds.playSound("MortePlayer.wav");
-            JOptionPane.showMessageDialog(this, mensagem, "GAME OVER", JOptionPane.PLAIN_MESSAGE);
+
+            HallDaFama hallDaFama;
+
+            hallDaFama = new HallDaFama();
+            int menorPontuacao = hallDaFama.getMenorPontuacao();
+            if (pontuacao > menorPontuacao){
+
+                String nome = "";
+
+                while (nome == null || nome.equals("")) {
+                    nome = JOptionPane.showInputDialog("Parabéns! Você entrou para o hall da fama: "
+                            + pontuacao + " pontos",
+                            "Digite seu nome");
+                    if (nome == null || nome.equals("")) {
+                        JOptionPane.showMessageDialog(null,"Digite o seu nome");
+                    }
+                }
+                hallDaFama.novaEntrada(new EntradaHallDaFama(nome, pontuacao));
+
+            }else{
+                JOptionPane.showMessageDialog(this, mensagem, "GAME OVER", JOptionPane.PLAIN_MESSAGE);
+            }
         }
+
         else if(alt == 1){
             String mensagem = "Moreu de fome!\nPontuação: "+pontuacao;
             Sounds.playSound("MortePlayer.wav");
             JOptionPane.showMessageDialog(this, mensagem, "GAME OVER", JOptionPane.PLAIN_MESSAGE);
+
         }
         else {
             String mensagem = "Você ganhou!\nPontuação: "+pontuacao;
