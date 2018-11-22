@@ -165,7 +165,7 @@ public class TelaConfiguracoes extends JPanel {
             sliderMaxGeracoes = this.configurarSlider(1, 10,configuracao.maxGeracoes);
             sliderMinimoSeres = this.configurarSlider(1, 10,configuracao.minimoSeres);
             sliderTempoOcisidade = this.configurarSlider(1, 100,(int)configuracao.tempoMaximoOciosidade);
-            sliderTempoPasso = this.configurarSlider(1, 100,(int)configuracao.tempoPasso);
+            sliderTempoPasso = this.configurarSlider(30, 120,(int)configuracao.tempoPasso);
 
             labelAltura = this.configurarLabel();
             labelLargura = this.configurarLabel();
@@ -281,9 +281,9 @@ public class TelaConfiguracoes extends JPanel {
     private void updateLabels(){
         labelAltura.setText("altura: " + sliderAltura.getValue());
         labelLargura.setText("largura: " + sliderLargura.getValue());
-        labelTempoPasso.setText("tempo passo: " + sliderTempoPasso.getValue());
+        labelTempoPasso.setText("FPS: " + sliderTempoPasso.getValue());
         labelTempoOcisidade.setText("tempo ociosidade: " + sliderTempoOcisidade.getValue());
-        labelMinimoSeres.setText("mínimo de seresL " + sliderMinimoSeres.getValue());
+        labelMinimoSeres.setText("mínimo de seres: " + sliderMinimoSeres.getValue());
         labelMaxGeracoes.setText("max gerações: " + sliderMaxGeracoes.getValue());
         labelAumentoLinear.setText("aumento linear: " + sliderAumentoLinear.getValue());
     }

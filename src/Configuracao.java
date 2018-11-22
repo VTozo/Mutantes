@@ -37,7 +37,7 @@ public class Configuracao implements Serializable{
         largura = 400;
         altura = 300;
         maxGeracoes = 3;
-        tempoPasso = 1000/60;
+        tempoPasso = 1000/30;
         tempoMaximoOciosidade = 1;
         minimoSeres = 1;
         maximoAumentoLinear = 3;

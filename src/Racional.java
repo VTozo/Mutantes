@@ -32,7 +32,6 @@ class Racional extends JComponent {
     Racional(Territorio territorio) throws IOException {
 
         Configuracao configuracao = new Configuracao();
-        configuracao = new Configuracao();
         try {
             configuracao = configuracao.abrir();
         } catch (IOException e) {
