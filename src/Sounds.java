@@ -3,6 +3,7 @@ import sun.applet.Main;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import java.io.InputStream;
 
 public class Sounds {
 
@@ -13,8 +14,14 @@ public class Sounds {
             public void run() {
                 try {
                     Clip clip = AudioSystem.getClip();
+
+                    InputStream path = TelaInicial.class.getResourceAsStream("sons/" + url);
+
+                    System.out.println("filename: " + url);
+                    System.out.println("path: " + path);
+
                     AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-                            Main.class.getResourceAsStream("sons/" + url));
+                            path);
 
 //                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(
 //                            Main.class.getResourceAsStream("/path/to/sounds/" + url));

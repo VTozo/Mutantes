@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 
@@ -102,6 +101,7 @@ class Territorio extends JPanel {
                 if (geracao < geracao_maxima) {
                     gerar_seres(5);
                     geracao++;
+                    Sounds.playSound("TrocaGeracao.wav");
                     ociosidade = 100;
                 } else if (ociosidade <= 0 || seres.size() == 1) {
                     if (seres.get(0).get_em_fissao() == 0) {
@@ -199,6 +199,7 @@ class Territorio extends JPanel {
                     pontuacao += seres.get(i).getDiametro();
                     nivel_de_fome = 0;
                     seres.remove(i);
+                    Sounds.playSound("BolinhaComida.wav");
                     break;
                 }
                 else {
@@ -213,6 +214,7 @@ class Territorio extends JPanel {
                     if(s1.getRetangulo().intersects(s2.getRetangulo())
                             && s1.getPosicao() != s2.getPosicao()){
                         fusao(i,c);
+                        Sounds.playSound("JuncaoBolinhas.wav");
                         ociosidade = 100;
                         break;
                     }
@@ -257,10 +259,12 @@ class Territorio extends JPanel {
     private void game_over(int alt) {
         if(alt == 0){
             String mensagem = "Você perdeu!\nPontuação: "+pontuacao;
+            Sounds.playSound("MortePlayer.wav");
             JOptionPane.showMessageDialog(this, mensagem, "GAME OVER", JOptionPane.PLAIN_MESSAGE);
         }
         else if(alt == 1){
             String mensagem = "Moreu de fome!\nPontuação: "+pontuacao;
+            Sounds.playSound("MortePlayer.wav");
             JOptionPane.showMessageDialog(this, mensagem, "GAME OVER", JOptionPane.PLAIN_MESSAGE);
         }
         else {
