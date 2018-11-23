@@ -32,14 +32,6 @@ class Racional extends JComponent {
     Racional(Territorio territorio) throws IOException {
 
         Configuracao configuracao = new Configuracao();
-        try {
-            configuracao = configuracao.abrir();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
 
         String imgPathName = "src/imagens/personagem_" + configuracao.personagem + ".png";
 

@@ -56,11 +56,18 @@ public class HallDaFama implements Serializable {
         arquivo.close();
     }
 
-
+    //verifica se com a pontuacao
+    public boolean deveEntrarParaOHallDaFama(int pontuacao){
+        //pontuacao deve ser maior que zero
+//        verdadeiro se nao tiver 10 entradas cadastradas
+        //ou se a pontuacao fornecida for maior que a decima
+        //
+        return (pontuacao > 0 && (entradas.size() < 10 || pontuacao > getMenorPontuacao()));
+    }
     public int getMaiorPontuacao(){
         if (entradas.size() > 0){
             Collections.sort(entradas);
-            return entradas.get(0).pontuacao;
+            return entradas.get(entradas.size() - 1).pontuacao;
         }else{
             return 0;
         }
@@ -69,7 +76,7 @@ public class HallDaFama implements Serializable {
     public int getMenorPontuacao(){
         if (entradas.size() > 0){
             Collections.sort(entradas);
-            return entradas.get(entradas.size() - 1).pontuacao;
+            return entradas.get(0).pontuacao; //ele faz o sorteio na ordem invesa
         }else{
             return 0;
         }

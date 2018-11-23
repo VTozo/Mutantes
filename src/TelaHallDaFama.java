@@ -11,8 +11,8 @@ import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
 public class TelaHallDaFama extends JPanel {
-    int largura = 400;
-    int altura = 400;
+
+
     ControleDeTela controleDeTela;
 
     JLabel labelScores;

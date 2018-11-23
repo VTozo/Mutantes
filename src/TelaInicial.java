@@ -13,13 +13,17 @@ import javax.swing.border.Border;
 
 public class TelaInicial extends JPanel implements ActionListener {
 
-    int largura = 400;
-    int altura = 400;
+
     ControleDeTela controleDeTela;
 
     TelaInicial(ControleDeTela controleDeTela) {
         this.controleDeTela = controleDeTela;
 
+        Configuracao configuracao = new Configuracao();
+
+
+        int largura = configuracao.janelaPrincipalLargura;
+        int altura = configuracao.janelaPrincipalAltura;
 
         this.setSize(largura,altura);
         this.controleDeTela.frame.setSize(largura, altura);

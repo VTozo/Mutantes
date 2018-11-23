@@ -32,13 +32,7 @@ class Territorio extends JPanel {
 //        frame.setSize(largura, altura);
 //        frame.setResizable(false);
 //        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        try {
-            configuracao = Configuracao.abrir();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        Configuracao configuracao = new Configuracao();
 
         altura = configuracao.altura;
         largura = configuracao.largura;
@@ -280,11 +274,10 @@ class Territorio extends JPanel {
             String mensagem = "Você perdeu!\nPontuação: "+pontuacao;
             Sounds.playSound("MortePlayer.wav");
 
-            HallDaFama hallDaFama;
+            HallDaFama hallDaFama = new HallDaFama();
 
-            hallDaFama = new HallDaFama();
-            int menorPontuacao = hallDaFama.getMenorPontuacao();
-            if (pontuacao > menorPontuacao){
+
+            if (hallDaFama.deveEntrarParaOHallDaFama(pontuacao)){
 
                 String nome = "";
 

@@ -31,17 +31,52 @@ public class Configuracao implements Serializable{
     public int maximoAumentoLinear;
     public int ociosidade;
 
+    public int janelaPrincipalLargura = 800;
+    public int janelaPrincipalAltura = 600;
+
     public Configuracao(){
 
         personagem = "menino";
         largura = 400;
         altura = 300;
+
+
         maxGeracoes = 3;
         tempoPasso = 1000/30;
         tempoMaximoOciosidade = 1;
         minimoSeres = 1;
         maximoAumentoLinear = 3;
         ociosidade = 100;
+
+        FileInputStream arquivo = null;
+        try {
+            arquivo = new FileInputStream("config.conf");
+            ObjectInputStream restaurador = new ObjectInputStream(arquivo);
+
+            Configuracao configuracao = null;
+
+            configuracao = (Configuracao) restaurador.readObject();
+            this.maximoAumentoLinear = configuracao.maximoAumentoLinear;
+            this.personagem = configuracao.personagem;
+            this.maxGeracoes = configuracao.maxGeracoes;
+            this.minimoSeres = configuracao.minimoSeres;
+            this.tempoPasso = configuracao.tempoPasso;
+            this.altura = configuracao.altura;
+            this.largura = configuracao.largura;
+            this.tempoMaximoOciosidade = configuracao.tempoMaximoOciosidade;
+            this.ociosidade = configuracao.ociosidade;
+
+            restaurador.close();
+            arquivo.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
 
     }
 
@@ -66,13 +101,4 @@ public class Configuracao implements Serializable{
         arquivo.close();
     }
 
-    public static Configuracao abrir() throws IOException, ClassNotFoundException{
-        Configuracao configuracao = null;
-        FileInputStream arquivo = new FileInputStream("config.conf");
-        ObjectInputStream restaurador = new ObjectInputStream(arquivo);
-        configuracao = (Configuracao) restaurador.readObject();
-        restaurador.close();
-        arquivo.close();
-        return configuracao;
-    }
 }

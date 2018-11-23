@@ -17,7 +17,7 @@ public class EntradaHallDaFama implements Comparable<EntradaHallDaFama>, Seriali
     public int compareTo(EntradaHallDaFama outraEntrada) {
 
 //        os returns estao ao contrario para mostrar na ordem inversa
-        
+
         if (this.pontuacao < outraEntrada.pontuacao){
             return 1;
         }else if(this.pontuacao > outraEntrada.pontuacao){

@@ -18,8 +18,6 @@ import javax.swing.event.ChangeListener;
 
 public class TelaConfiguracoes extends JPanel {
 
-    int largura = 400;
-    int altura = 400;
     ControleDeTela controleDeTela;
 
     private JButton btnMenina;
@@ -54,23 +52,22 @@ public class TelaConfiguracoes extends JPanel {
 
         this.controleDeTela = controleDeTela;
 
-//        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
+        GridBagLayout layout = new GridBagLayout();
+        this.setLayout(layout);
 
+        GridBagConstraints constraints = new GridBagConstraints();
+
+        constraints.fill = GridBagConstraints.HORIZONTAL;
 
         configuracao = new Configuracao();
 
-        try {
-            configuracao = configuracao.abrir();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        Configuracao configuracao = new Configuracao();
+
 
 //        this.setLayout(layout);
 
-        GridLayout layout = new GridLayout(0,2);
-        this.setLayout(layout);
+//        GridLayout layout = new GridLayout(0,2);
+//        this.setLayout(layout);
 
         this.setBackground(Color.darkGray);
 
@@ -82,11 +79,20 @@ public class TelaConfiguracoes extends JPanel {
             JLabel picLabel = new JLabel(new ImageIcon(image));
 
 
-            this.add(picLabel);
+            constraints.fill = GridBagConstraints.HORIZONTAL;
+            constraints.gridx = 0;
+            constraints.gridy = 0;
+            constraints.gridwidth = 2;
+            this.add(picLabel,constraints);
 
+            constraints.fill = GridBagConstraints.HORIZONTAL;
+            constraints.gridx = 0;
+            constraints.gridy = 1;
+            constraints.gridwidth = 2;
             JLabel lblEscolha = this.configurarLabel();
             lblEscolha.setText("Escolha seu personagem");
-            this.add(lblEscolha);
+            constraints.gridy = 1;
+            this.add(lblEscolha, constraints);
 
 //            botao menina
             int NEW_WIDTH = 60;
@@ -108,7 +114,13 @@ public class TelaConfiguracoes extends JPanel {
                     selecionarPersonagem("menina");
                 }
             });
-            this.add(btnMenina);
+
+            constraints.fill = GridBagConstraints.HORIZONTAL;
+            constraints.gridx = 0;
+            constraints.gridy = constraints.gridy + 1;
+            constraints.gridwidth = 1;
+
+            this.add(btnMenina,constraints);
 
 //            botao menino
             BufferedImage bufferImgMenino = ImageIO.read(new File("src/imagens/personagem_menino.png"));
@@ -123,7 +135,10 @@ public class TelaConfiguracoes extends JPanel {
                     selecionarPersonagem("menino");
                 }
             });
-            this.add(btnMenino);
+
+            constraints.gridx = 1;
+            constraints.weightx = 0.5;
+            this.add(btnMenino, constraints);
             // common listener for all sliders
 
 
@@ -176,27 +191,58 @@ public class TelaConfiguracoes extends JPanel {
             labelTempoPasso = this.configurarLabel();
 
 
+//----
+            constraints.gridx = 0;
+            constraints.gridy = constraints.gridy + 1;
+            constraints.weightx = 0.2;
+            this.add(labelAltura, constraints);
 
-            this.add(labelAltura);
-            this.add(sliderAltura);
+            constraints.gridx = 1;
+            constraints.weightx = 1;
+            this.add(sliderAltura, constraints);
+//----
 
-            this.add(labelLargura);
-            this.add(sliderLargura);
+            constraints.gridx = 0;
+            constraints.gridy = constraints.gridy + 1;
+            this.add(labelLargura, constraints);
+            constraints.gridx = 1;
+            this.add(sliderLargura, constraints);
+//----
 
-            this.add(labelAumentoLinear);
-            this.add(sliderAumentoLinear);
+            constraints.gridx = 0;
+            constraints.gridy = constraints.gridy + 1;
+            this.add(labelAumentoLinear, constraints);
+            constraints.gridx = 1;
+            this.add(sliderAumentoLinear, constraints);
+//----
 
-            this.add(labelMaxGeracoes);
-            this.add(sliderMaxGeracoes);
+            constraints.gridx = 0;
+            constraints.gridy = constraints.gridy + 1;
+            this.add(labelMaxGeracoes, constraints);
+            constraints.gridx = 1;
+            this.add(sliderMaxGeracoes, constraints);
+//----
 
-            this.add(labelMinimoSeres);
-            this.add(sliderMinimoSeres);
+            constraints.gridx = 0;
+            constraints.gridy = constraints.gridy + 1;
+            this.add(labelMinimoSeres, constraints);
+            constraints.gridx = 1;
+            this.add(sliderMinimoSeres, constraints);
+//----
 
-            this.add(labelTempoOcisidade);
-            this.add(sliderTempoOcisidade);
+            constraints.gridx = 0;
+            constraints.gridy = constraints.gridy + 1;
+            this.add(labelTempoOcisidade, constraints);
+            constraints.gridx = 1;
+            this.add(sliderTempoOcisidade, constraints);
+//----
 
-            this.add(labelTempoPasso);
-            this.add(sliderTempoPasso);
+            constraints.gridx = 0;
+            constraints.gridy = constraints.gridy + 1;
+            this.add(labelTempoPasso, constraints);
+            constraints.gridx = 1;
+            this.add(sliderTempoPasso, constraints);
+//----
 
 
             //          botao voltar
@@ -211,7 +257,11 @@ public class TelaConfiguracoes extends JPanel {
                 }
             });
 
-            this.add(btnVoltar);
+            constraints.fill = GridBagConstraints.HORIZONTAL;
+            constraints.gridx = 0;
+            constraints.gridy = constraints.gridy + 1;
+            constraints.gridwidth = 2;
+            this.add(btnVoltar, constraints);
 
 
         } catch (IOException ex) {

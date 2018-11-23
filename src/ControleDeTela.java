@@ -5,8 +5,8 @@ import java.io.IOException;
 
 
 public class ControleDeTela extends JPanel implements TelaInicialInterface, TerritorioInterface, TelaHallDaFamaInterface{
-    int largura = 400;
-    int altura = 400;
+    int largura;
+    int altura;
 
     public JFrame frame;
 
@@ -17,21 +17,21 @@ public class ControleDeTela extends JPanel implements TelaInicialInterface, Terr
 
     ControleDeTela() {
 
+        Configuracao configuracao = new Configuracao();
+
+
+        largura = configuracao.janelaPrincipalLargura;
+        altura = configuracao.janelaPrincipalAltura;
+
         GridLayout layout = new GridLayout(1,0);
         this.setLayout(layout);
 
-        Configuracao configuracao = new Configuracao();
-        try {
-            configuracao = configuracao.abrir();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+
 
         frame = new JFrame("FrameDoJogo");
         frame.getContentPane().add(this);
-        frame.setSize(400, 400);
+
+        frame.setSize(configuracao.janelaPrincipalLargura, configuracao.janelaPrincipalAltura);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBackground(Color.black);
