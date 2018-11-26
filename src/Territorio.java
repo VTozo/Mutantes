@@ -19,7 +19,7 @@ class Territorio extends JPanel {
     private int nivel_de_fome = 0;
     private int pontuacao = 0;
     private int minimoSeres = 0;
-    Configuracao configuracao = new Configuracao();
+    Configuracao configuracao = Configuracao.getInstance();
 
     private ControleDeTela controleDeTela;
 
@@ -27,12 +27,7 @@ class Territorio extends JPanel {
 
         this.controleDeTela = controleDeTela;
 
-        //        JFrame frame = new JFrame(nome);
-//        frame.add(this);
-//        frame.setSize(largura, altura);
-//        frame.setResizable(false);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Configuracao configuracao = new Configuracao();
+        Configuracao configuracao = Configuracao.getInstance();
 
         altura = configuracao.altura;
         largura = configuracao.largura;
@@ -42,7 +37,6 @@ class Territorio extends JPanel {
 
         this.setSize(largura,altura);
         this.controleDeTela.frame.setSize(largura, altura);
-        System.out.println("parent: " + this.getParent());
 
         this.setVisible(true);
         try{
@@ -50,9 +44,6 @@ class Territorio extends JPanel {
         }catch (Exception e){
             System.out.println(e);
         }
-//        KeyListener listener = new LeitorSetas(racional);
-//        addKeyListener(listener);
-//        setFocusable(true);
 
     }
 
@@ -115,7 +106,7 @@ class Territorio extends JPanel {
                     gerar_seres(configuracao.minimoSeres * 2);
                     geracao++;
                     Sounds.playSound("TrocaGeracao.wav");
-                    ociosidade = 100;
+                    ociosidade = configuracao.tempoMaximoOciosidade;
                 } else if (ociosidade <= 0 || seres.size() == 1) {
                     if (seres.get(0).get_em_fissao() == 0) {
                         jogando = false;
@@ -147,9 +138,10 @@ class Territorio extends JPanel {
             repaint();
 
 
-            try {
+//            deve pegar do fps das configuracoes
 
-                Thread.sleep(1000 / 60);
+            try {
+                Thread.sleep(1000 / (long)configuracao.tempoPasso);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -228,7 +220,7 @@ class Territorio extends JPanel {
                             && s1.getPosicao() != s2.getPosicao()){
                         fusao(i,c);
                         Sounds.playSound("JuncaoBolinhas.wav");
-                        ociosidade = 100;
+                        ociosidade = configuracao.tempoMaximoOciosidade;
                         break;
                     }
                 }
@@ -270,46 +262,69 @@ class Territorio extends JPanel {
     }
 
     private void game_over(int alt) {
-        if(alt == 0){
-            String mensagem = "Você perdeu!\nPontuação: "+pontuacao;
-            Sounds.playSound("MortePlayer.wav");
 
-            HallDaFama hallDaFama = new HallDaFama();
+        HallDaFama hallDaFama = new HallDaFama();
+        Boolean deveEntrarParaOHallDaFama = hallDaFama.deveEntrarParaOHallDaFama(pontuacao);
 
+        String mensagem = "";
+        String som = "MortePlayer.wav";
+        String titulo = "Game Over";
+        int optionPane = JOptionPane.PLAIN_MESSAGE; //tipo de painel que vai surgir
 
-            if (hallDaFama.deveEntrarParaOHallDaFama(pontuacao)){
-
-                String nome = "";
-
-                while (nome == null || nome.equals("")) {
-                    nome = JOptionPane.showInputDialog("Parabéns! Você entrou para o hall da fama: "
-                            + pontuacao + " pontos",
-                            "Digite seu nome");
-                    if (nome == null || nome.equals("")) {
-                        JOptionPane.showMessageDialog(null,"Digite o seu nome");
-                    }
+        switch (alt){
+            case 0: //morte devido a colisao
+                if (deveEntrarParaOHallDaFama){
+                    mensagem = "Você perdeu!\nMas entrou para o Hall da Fama\n" + pontuacao + " pontos";
+                }else{
+                    mensagem = "Você perdeu!\nPontuação: " + pontuacao;
                 }
-                hallDaFama.novaEntrada(new EntradaHallDaFama(nome, pontuacao));
 
-            }else{
-                JOptionPane.showMessageDialog(this, mensagem, "GAME OVER", JOptionPane.PLAIN_MESSAGE);
+
+                break;
+            case 1: ///morte por fome
+                if (deveEntrarParaOHallDaFama){
+                    mensagem = "Morreu de Fome!\nMas entrou para o Hall da Fama";
+                }else{
+                    mensagem = "Moreu de fome!\nPontuação: " + pontuacao;
+                }
+
+                break;
+            case 2: ///Venceu todos os niveis
+                if (deveEntrarParaOHallDaFama){
+                    mensagem = "Você venceu!\nE ainda entrou para o Hall da Fama\nPontuação: " + pontuacao;
+                }else{
+                    mensagem = "Você venceu!\nnPontuação: " + pontuacao;
+                }
+                som = "VoceVenceu.wav";
+                break;
+
+            default:
+                break;
+        }
+
+        Sounds.playSound(som);
+
+        if (deveEntrarParaOHallDaFama){
+            String nome = "";
+
+            while (nome == null || nome.equals("")) {
+                nome = JOptionPane.showInputDialog(mensagem,
+                        "Digite seu nome");
+                if (nome == null || nome.equals("")) {
+                    JOptionPane.showMessageDialog(null,"Digite o seu nome");
+                }
             }
+            hallDaFama.novaEntrada(new EntradaHallDaFama(nome, pontuacao));
+        }else{
+            JOptionPane.showMessageDialog(this, mensagem, titulo, JOptionPane.PLAIN_MESSAGE);
         }
 
-        else if(alt == 1){
-            String mensagem = "Moreu de fome!\nPontuação: "+pontuacao;
-            Sounds.playSound("MortePlayer.wav");
-            JOptionPane.showMessageDialog(this, mensagem, "GAME OVER", JOptionPane.PLAIN_MESSAGE);
 
-        }
-        else {
-            String mensagem = "Você ganhou!\nPontuação: "+pontuacao;
-            JOptionPane.showMessageDialog(this, mensagem, "Parabéns!", JOptionPane.PLAIN_MESSAGE);
-        }
 
         controleDeTela.gameOver();
 //        System.exit(0);
     }
+
 
     private void gerar_seres(int n){
         int seres_gerados = 0;

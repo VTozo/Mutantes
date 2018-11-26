@@ -59,17 +59,9 @@ public class TelaConfiguracoes extends JPanel {
 
         constraints.fill = GridBagConstraints.HORIZONTAL;
 
-        configuracao = new Configuracao();
+        configuracao = Configuracao.getInstance();
 
-        Configuracao configuracao = new Configuracao();
-
-
-//        this.setLayout(layout);
-
-//        GridLayout layout = new GridLayout(0,2);
-//        this.setLayout(layout);
-
-        this.setBackground(Color.darkGray);
+        this.setBackground(Color.black);
 
 
 
@@ -305,17 +297,15 @@ public class TelaConfiguracoes extends JPanel {
 
 
     private JSlider configurarSlider(int min, int max, int value){
-        System.out.println("min: " + min + "  max: " + max + "  value: " + value);
-        JSlider slider = new JSlider(JSlider.HORIZONTAL, min,max,value);
+//        System.out.println("min: " + min + "  max: " + max + "  value: " + value);
 
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, min,max,value);
         slider.setMajorTickSpacing((max - min)/5);
         slider.setMinorTickSpacing((max - min)/10);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
         slider.setBackground(Color.WHITE);
-        slider.setBackground(Color.WHITE);
         slider.setForeground(Color.red);
-        System.out.println(listener);
         slider.addChangeListener(listener);
 
         return slider;

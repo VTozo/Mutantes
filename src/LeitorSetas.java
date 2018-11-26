@@ -13,7 +13,8 @@ class LeitorSetas implements KeyListener{
     }
 
     LeitorSetas() {
-
+        System.out.println("leitor de setas criado");
+        System.out.println("racional (leitorSetas): " + racional);
     }
 
     public Racional getRacional(Racional racional){
@@ -24,14 +25,11 @@ class LeitorSetas implements KeyListener{
         this.racional = racional;
     }
 
-//    LeitorSetas(Racional racional){
-//        this.racional = racional;
-//    }
-
     public void keyTyped(KeyEvent e){
     }
 
     public void keyPressed(KeyEvent e){
+//        System.out.println("LeitorSetas event: " + e);
         racional.keyPressed(e);
     }
 

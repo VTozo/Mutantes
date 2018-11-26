@@ -17,8 +17,8 @@ public class Sounds {
 
                     InputStream path = TelaInicial.class.getResourceAsStream("sons/" + url);
 
-                    System.out.println("filename: " + url);
-                    System.out.println("path: " + path);
+//                    System.out.println("filename: " + url);
+//                    System.out.println("path: " + path);
 
                     AudioInputStream inputStream = AudioSystem.getAudioInputStream(
                             path);

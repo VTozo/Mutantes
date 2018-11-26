@@ -21,18 +21,23 @@ public class Configuracao implements Serializable{
 // isto é, pode chegar, no máximo, ao tamanho de 3 seres, considerando o raio, e não a área.)
 
 
+    private static final Configuracao INSTANCE = new Configuracao();
+
     public String personagem;
     public int largura;
     public int altura;
     public int maxGeracoes;
     public double tempoPasso;
-    public double tempoMaximoOciosidade;
+    public int tempoMaximoOciosidade;
     public int minimoSeres;
     public int maximoAumentoLinear;
-    public int ociosidade;
 
     public int janelaPrincipalLargura = 800;
     public int janelaPrincipalAltura = 600;
+
+    public static Configuracao getInstance(){
+        return INSTANCE;
+    }
 
     public Configuracao(){
 
@@ -46,7 +51,6 @@ public class Configuracao implements Serializable{
         tempoMaximoOciosidade = 1;
         minimoSeres = 1;
         maximoAumentoLinear = 3;
-        ociosidade = 100;
 
         FileInputStream arquivo = null;
         try {
@@ -64,7 +68,6 @@ public class Configuracao implements Serializable{
             this.altura = configuracao.altura;
             this.largura = configuracao.largura;
             this.tempoMaximoOciosidade = configuracao.tempoMaximoOciosidade;
-            this.ociosidade = configuracao.ociosidade;
 
             restaurador.close();
             arquivo.close();
@@ -75,23 +78,8 @@ public class Configuracao implements Serializable{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-
-
     }
 
-    public void alterar(String personagem, int largura, int altura, int maxGeracoes, double tempoPasso,
-                        double tempoMaximoOciosidade, int minimoSeres, int maximoAumentoLinear, int ociosidade){
-        this.personagem = personagem;
-        this.largura = largura;
-        this.altura = altura;
-        this.maxGeracoes = maxGeracoes;
-        this.tempoPasso = tempoPasso;
-        this.tempoMaximoOciosidade = tempoMaximoOciosidade;
-        this.minimoSeres = minimoSeres;
-        this.maximoAumentoLinear = maximoAumentoLinear;
-        this.ociosidade = ociosidade;
-    }
 
     public void salvar()throws IOException {
         FileOutputStream arquivo = new FileOutputStream("config.conf");

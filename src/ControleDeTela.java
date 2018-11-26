@@ -17,7 +17,7 @@ public class ControleDeTela extends JPanel implements TelaInicialInterface, Terr
 
     ControleDeTela() {
 
-        Configuracao configuracao = new Configuracao();
+        Configuracao configuracao = Configuracao.getInstance();
 
 
         largura = configuracao.janelaPrincipalLargura;
@@ -40,31 +40,30 @@ public class ControleDeTela extends JPanel implements TelaInicialInterface, Terr
         this.add(telaInicial);
 
         frame.setVisible(true);
+
+        //        O Controle de tela é quem vai receber os Eventos de Tecla
+
+        KeyListener listener = LeitorSetas.getInstance();
+        System.out.println("listener: " + listener);
+        addKeyListener(listener);
+
+
     }
 
 //Interface da Tela Inicial
     public void btnJogarPressionado(){
-        System.out.println("btnJogarPressionado");
+
+        setFocusable(true);
+
         telaInicial.setVisible(false);
 
         this.remove(telaInicial);
 
         territorio = new Territorio(this);
 
-        KeyListener listener = LeitorSetas.getInstance();
-        System.out.println("listener: " + listener);
-        ((LeitorSetas) listener).setRacional(territorio.racional);
-
-        addKeyListener(listener);
-        setFocusable(true);
-
-
         this.add(territorio);
         territorio.setVisible(true);
-        System.out.println("racional: " + territorio.racional);
-//        O Controle de tela é quem vai receber os Eventos de Tecla
-
-
+        this.configurarLeitorDeSetas();
 
         territorio.jogar();
     }
@@ -139,6 +138,28 @@ public class ControleDeTela extends JPanel implements TelaInicialInterface, Terr
         this.repaint();
 
         telaInicial.setVisible(true);
+    }
+
+//    CONTROLE DE SETAS
+    private void configurarLeitorDeSetas(){
+//        como existem varias telas que podem estar em primeiro plano,
+// deve-se configurar o controle de setas para dar o devido tratamento
+//        de acordo com a tela que estiver em primeiro plano
+
+        System.out.println("------------");
+        System.out.println("configurar setas");
+        System.out.println("Leitor: " + LeitorSetas.getInstance());
+        System.out.println("territorio: " + territorio);
+        System.out.println("territorio.racional: " + territorio.racional);
+        System.out.println("------------");
+
+        if (territorio != null){
+//            territorio esta em primeiro plano
+            LeitorSetas.getInstance().setRacional(territorio.racional);
+            this.setFocusable(true);
+        }else{
+
+        }
     }
 
 }

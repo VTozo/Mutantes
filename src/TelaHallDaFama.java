@@ -20,8 +20,13 @@ public class TelaHallDaFama extends JPanel {
     TelaHallDaFama(ControleDeTela controleDeTela) {
         this.controleDeTela = controleDeTela;
 
-        GridLayout layout = new GridLayout(0,1);
+        GridBagLayout layout = new GridBagLayout();
         this.setLayout(layout);
+
+        GridBagConstraints constraints = new GridBagConstraints();
+
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+
 
         this.setBackground(Color.black);
 
@@ -30,13 +35,25 @@ public class TelaHallDaFama extends JPanel {
         try {
             BufferedImage image = ImageIO.read(new File("src/imagens/mutantes_logo.png"));
             JLabel picLabel = new JLabel(new ImageIcon(image));
-            this.add(picLabel);
+
+
+            constraints.fill = GridBagConstraints.HORIZONTAL;
+            constraints.gridx = 0;
+            constraints.gridy = 0;
+            constraints.gridheight = 1;
+
+            this.add(picLabel, constraints);
 
             labelScores = new JLabel();
             labelScores.setForeground(Color.WHITE);
             labelScores.setHorizontalAlignment(SwingConstants.CENTER);
-            labelScores.setText("COLOCAR O TEXTO DE SCORES AQUI");
-            this.add(labelScores);
+
+            constraints.fill = GridBagConstraints.HORIZONTAL;
+            constraints.gridx = 0;
+            constraints.gridy = constraints.gridy + 1;
+            constraints.gridheight = 6;
+
+            this.add(labelScores, constraints);
 
             BufferedImage imgBtnVoltar = ImageIO.read(new File("src/imagens/botao_voltar.png"));
 
@@ -52,7 +69,12 @@ public class TelaHallDaFama extends JPanel {
                 }
             });
 
-            this.add(btnVoltar);
+            constraints.fill = GridBagConstraints.HORIZONTAL;
+            constraints.gridx = 0;
+            constraints.gridy = 7;
+            constraints.gridheight = 1;
+
+            this.add(btnVoltar, constraints);
 
             HallDaFama hallDaFama = new HallDaFama();
             String text = hallDaFama.getTexto();

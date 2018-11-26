@@ -31,7 +31,7 @@ class Racional extends JComponent {
 
     Racional(Territorio territorio) throws IOException {
 
-        Configuracao configuracao = new Configuracao();
+        Configuracao configuracao = Configuracao.getInstance();
 
         String imgPathName = "src/imagens/personagem_" + configuracao.personagem + ".png";
 
@@ -47,6 +47,8 @@ class Racional extends JComponent {
         }catch (Exception e){
             System.out.println(e.fillInStackTrace());
         }
+
+        System.out.println("racional criado");
 
     }
 

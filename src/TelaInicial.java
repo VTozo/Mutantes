@@ -19,7 +19,7 @@ public class TelaInicial extends JPanel implements ActionListener {
     TelaInicial(ControleDeTela controleDeTela) {
         this.controleDeTela = controleDeTela;
 
-        Configuracao configuracao = new Configuracao();
+        Configuracao configuracao = Configuracao.getInstance();
 
 
         int largura = configuracao.janelaPrincipalLargura;
@@ -92,7 +92,7 @@ public class TelaInicial extends JPanel implements ActionListener {
                 "Prof. Dr. Alcides Calsavara<br>"+
                 "Caíque  |  "+
                 "Bella A.  |  "+
-                "Guilherme Miranda"+
+                "Guilherme Miranda  |  "+
                 "Ricardo Varjão  |  "+
                 "Vinícius Tozo</html>"
         );
