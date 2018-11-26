@@ -36,9 +36,9 @@ class Territorio extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        for (Ser ser : seres) {
-            if (ser != null)
-                ser.paint(g);
+        for (int i = 0; i < seres.size(); i++) {
+            if (seres.get(i) != null)
+                seres.get(i).paint(g);
         }
 
         if (racional != null)
