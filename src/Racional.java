@@ -29,28 +29,28 @@ class Racional extends JComponent {
     private double angle;
 
 
-    Racional(Territorio territorio) throws IOException {
+        Racional(Territorio territorio) throws IOException {
 
-        Configuracao configuracao = Configuracao.getInstance();
+            Configuracao configuracao = Configuracao.getInstance();
 
-        String imgPathName = "src/imagens/personagem_" + configuracao.personagem + ".png";
+            String imgPathName = "src/imagens/personagem_" + configuracao.personagem + ".png";
 
-        this.cor = Color.MAGENTA;
-        this.territorio = territorio;
-        this.x = territorio.largura/2 - tamanho;
-        this.y = territorio.altura/2 - tamanho;
+            this.cor = Color.MAGENTA;
+            this.territorio = territorio;
+            this.x = territorio.largura/2 - tamanho;
+            this.y = territorio.altura/2 - tamanho;
 
 
-        try {
-            bufferedImage = ImageIO.read(new File(imgPathName));
-            image = bufferedImage.getScaledInstance(tamanho, tamanho,  java.awt.Image.SCALE_SMOOTH ) ;
-        }catch (Exception e){
-            System.out.println(e.fillInStackTrace());
+            try {
+                bufferedImage = ImageIO.read(new File(imgPathName));
+                image = bufferedImage.getScaledInstance(tamanho, tamanho,  java.awt.Image.SCALE_SMOOTH ) ;
+            }catch (Exception e){
+                System.out.println(e.fillInStackTrace());
+            }
+
+            System.out.println("racional criado");
+
         }
-
-        System.out.println("racional criado");
-
-    }
 
     public void paint(Graphics g){
         Graphics2D g2d = (Graphics2D)g;

@@ -61,7 +61,7 @@ public class TelaConfiguracoes extends JPanel {
 
         configuracao = Configuracao.getInstance();
 
-        this.setBackground(Color.black);
+        this.setBackground(Color.darkGray);
 
 
 
